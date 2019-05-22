@@ -1,0 +1,17 @@
+.tiket-isi{
+	font-family: 'Roboto',sans-serif;
+	font-size:20px; 
+	font-weight: bold;
+}
+
+.tiket-bag1{
+	font-family: 'Cuprum',sans-serif;
+ 	border-right:2px dashed black;
+}
+
+.tiket-title{
+	font-family: 'lato',sans-serif;
+	font-size:25px;
+	font-weight: bold;
+	border-bottom:2px solid black;
+}

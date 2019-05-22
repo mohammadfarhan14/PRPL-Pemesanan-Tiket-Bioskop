@@ -1,0 +1,1 @@
+INSERT INTO `kursi`(`id_kursi`, `no_theater`, `no_kursi`) VALUES (NULL,1,"1C"),(NULL,1,"2C"),(NULL,1,"3C"),(NULL,1,"4C"),(NULL,1,"5C"),(NULL,1,"6C"),(NULL,1,"7C"),(NULL,1,"8C"),(NULL,1,"9C"),(NULL,1,"10C"),(NULL,1,"11C"),(NULL,1,"12C");

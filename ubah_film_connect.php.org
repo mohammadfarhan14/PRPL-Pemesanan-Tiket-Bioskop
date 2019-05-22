@@ -1,0 +1,78 @@
+<?php
+	require 'connect.php';
+	$directory = "img/";
+	$upload_status = 1;
+
+	$film[1] = $_POST['nama_film1'];
+	$tgl_rilis[1] = $_POST['tanggal_rilis1'];
+	$img_file[1] = $_FILES['poster_film1']['name'];
+	$tmp_dir[1] = $_FILES['poster_film1']['tmp_name'];
+	$img_size[1] = $_FILES['poster_film1']['size'];
+	
+
+	$film[2] = $_POST['nama_film2'];
+	$tgl_rilis[2] = $_POST['tanggal_rilis2'];
+	$img_file[2] = $_FILES['poster_film2']['name'];
+	$tmp_dir[2] = $_FILES['poster_film2']['tmp_name'];
+	$img_size[2] = $_FILES['poster_film2']['size'];
+	
+
+	$film[3] = $_POST['nama_film3'];
+	$tgl_rilis[3] = $_POST['tanggal_rilis3'];
+	$img_file[3] = $_FILES['poster_film3']['name'];
+	$tmp_dir[3] = $_FILES['poster_film3']['tmp_name'];
+	$img_size[3] = $_FILES['poster_film3']['size'];
+
+
+	$film[4] = $_POST['nama_film4'];
+	$tgl_rilis[4] = $_POST['tanggal_rilis4'];
+	$img_file[4] = $_FILES['poster_film4']['name'];
+	$tmp_dir[4] = $_FILES['poster_film4']['tmp_name'];
+	$img_size[4] = $_FILES['poster_film4']['size'];
+	
+
+	$i = 1;
+	$result = mysql_query("SELECT * FROM film");
+	while ($data = mysql_fetch_array($result)){
+		if($img_file[$i]){
+			$img_ext= strtolower(pathinfo($img_file[$i],PATHINFO_EXTENSION));
+			$valid_ext= array('jpeg','jpg','png');
+			
+			$poster_film = basename($_FILES["poster_film$i"]["name"]);
+
+			if(in_array($img_ext,$valid_ext)){
+				if ($img_size[$i]<4000000){
+					move_uploaded_file($tmp_dir[$i], $directory.$poster_film);
+				}
+				else{
+					echo "Ukuran file harus kurang dari 5 MB";
+					$upload_status=0;
+				}
+			}
+			else {
+				echo "Extensi File harus JPG,JPEG,PNG";
+				$upload_status=0;
+			}
+		}
+		else{
+			$poster_film = $data['poster_film'];
+			$tanggal_rilis= $data['tgl_rilis'];
+		}
+			$update = mysql_query("UPDATE film SET nama_film='$film[$i]',tgl_rilis='$tgl_rilis[$i]',poster_film='$poster_film' WHERE kode_film ='$i'");
+			$i++;
+	}
+	for ($i=1;$i<3;$i++){
+		$result1 = mysql_query("SELECT * FROM theater$i");
+		while ($data1 = mysql_fetch_array($result1)){
+			$no_kursi =$data1['id_kursi'];
+			$update_kursi = mysql_query("UPDATE theater$i SET jadwal_1 = 'tersedia',jadwal_2 = 'tersedia',jadwal_3 = 'tersedia',`jadwal_4`='tersedia' WHERE id_kursi='$no_kursi'");
+		}
+	}
+	if ($upload_status=1){
+		header("location:index.php");
+		
+	}
+	else {
+		echo "Film gagal diperharui";
+	}	
+?>

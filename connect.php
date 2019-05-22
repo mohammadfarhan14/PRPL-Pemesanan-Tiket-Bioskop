@@ -1,7 +1,7 @@
 <div style="display:none">
 <?php
 	session_start();
-	mysql_connect("localhost","root","");
-	mysql_select_db("mybioskop");
+	($GLOBALS["___mysqli_ston"] = mysqli_connect("localhost", "root"));
+	mysqli_select_db($GLOBALS["___mysqli_ston"], mybioskop);
 ?>
 </div>
